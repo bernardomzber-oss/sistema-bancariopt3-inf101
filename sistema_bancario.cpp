@@ -1,7 +1,3 @@
-// INF101 - Programação de Computadores I - UNIVIÇOSA
-// Sistema de Registro e Gestão de Contas Bancárias - ETAPA 3
-// Persistência de dados em arquivos (contas.txt e movimentacoes.txt)
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -17,7 +13,7 @@ const int MAX_MOVIMENTACOES = 1000;
 const string ARQUIVO_CONTAS = "contas.txt";
 const string ARQUIVO_MOVIMENTACOES = "movimentacoes.txt";
 
-// ---------- Arrays de contas ----------
+
 int    numeroConta[MAX_CONTAS];
 string nomeCliente[MAX_CONTAS];
 string cpf[MAX_CONTAS];
@@ -26,15 +22,13 @@ double saldo[MAX_CONTAS];
 int    contaAtiva[MAX_CONTAS];     // 1 = ativa, 0 = inativa
 int    quantidadeContas = 0;
 
-// ---------- Arrays de movimentações ----------
+
 int    contaMovimentacao[MAX_MOVIMENTACOES];
 char   tipoMovimentacao[MAX_MOVIMENTACOES];   // 'D' ou 'S'
 double valorMovimentacao[MAX_MOVIMENTACOES];
 int    quantidadeMovimentacoes = 0;
 
-// ======================================================
-// Funções auxiliares
-// ======================================================
+
 
 int buscarConta(int numero) {
     for (int i = 0; i < quantidadeContas; i++) {
@@ -74,9 +68,7 @@ string nomeTipo(int tipo) {
     return (tipo == 1) ? "Corrente" : "Poupanca";
 }
 
-// ======================================================
-// Persistência: gravação
-// ======================================================
+
 
 void salvarContas() {
     ofstream arquivo(ARQUIVO_CONTAS);   // sobrescreve com o estado atual dos arrays
@@ -111,9 +103,7 @@ void salvarMovimentacoes() {
     arquivo.close();
 }
 
-// ======================================================
-// Persistência: leitura
-// ======================================================
+
 
 void carregarContas() {
     quantidadeContas = 0;
@@ -142,7 +132,7 @@ void carregarContas() {
             contaAtiva[i]  = stoi(campo[5]);
             quantidadeContas++;
         } catch (...) {
-            // linha corrompida: ignora
+            
         }
     }
     arquivo.close();
@@ -177,9 +167,6 @@ void carregarMovimentacoes() {
     arquivo.close();
 }
 
-// ======================================================
-// Registro de movimentação (memória + arquivo)
-// ======================================================
 
 void registrarMovimentacao(int numero, char tipo, double valor) {
     if (quantidadeMovimentacoes >= MAX_MOVIMENTACOES) {
@@ -192,9 +179,7 @@ void registrarMovimentacao(int numero, char tipo, double valor) {
     quantidadeMovimentacoes++;
 }
 
-// ======================================================
-// Funcionalidades
-// ======================================================
+
 
 void cadastrarConta() {
     if (quantidadeContas >= MAX_CONTAS) {
@@ -219,7 +204,7 @@ void cadastrarConta() {
         cout << "Nome nao pode ser vazio!\n";
         return;
     }
-    // evita que o separador do arquivo quebre o registro
+    
     for (char& c : nome) if (c == ';') c = ' ';
 
     cout << "CPF (somente numeros): ";
@@ -406,9 +391,7 @@ void exibirExtrato() {
     cout << "Saldo atual: R$ " << fixed << setprecision(2) << saldo[i] << "\n";
 }
 
-// ======================================================
-// Programa principal
-// ======================================================
+
 
 int main() {
     carregarContas();
